@@ -1,3 +1,11 @@
+require('dotenv').config({path: './.prf/.env'});
+
+const nconf = require('nconf');
+
+nconf.use('memory');
+nconf
+  .env();
+
 const BPromise   = require('bluebird');
 const gulp       = require('gulp');
 const awspublish = require('gulp-awspublish');
@@ -6,7 +14,7 @@ const ajv        = require('ajv')({
   removeAdditional: false
 });
 
-const config = require('./config.json');
+const config = require('./.prf/config.json');
 
 const config_schema = {
   type    : 'array',
@@ -70,15 +78,19 @@ Bakap.prototype.upload = function (opts) {
     .then(function () {
       
       const publisher = awspublish.create({
-        region: opts.region,
-        params: {
+        region         : opts.region,
+        params         : {
           Bucket: opts.bucket_name
-        }
+        },
+        accessKeyId    : nconf.get('AWS_S3_ACCESS_KEY_ID'),
+        secretAccessKey: nconf.get('AWS_S3_ACCESS_KEY_SECRET')
       });
       
       const headers = {
         'x-amz-acl': opts.acl
       };
+  
+      console.log('YES');
       
       return gulp.src(opts.gulp_src, {base: opts.gulp_base})
         .pipe(publisher.publish(headers, {
