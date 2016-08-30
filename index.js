@@ -89,8 +89,6 @@ Bakap.prototype.upload = function (opts) {
       const headers = {
         'x-amz-acl': opts.acl
       };
-  
-      console.log('YES');
       
       return gulp.src(opts.gulp_src, {base: opts.gulp_base})
         .pipe(publisher.publish(headers, {
@@ -177,8 +175,7 @@ Bakap.prototype.initialize = function (config) {
           cronTime: opts.cron_time,
           onTick  : function () {
             console.log(`Executing:: ${opts.name}`);
-            console.log('Every second');
-            // self.upload(opts);
+            self.upload(opts);
           }
         });
         
