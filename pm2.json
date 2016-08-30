@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "master",
+      "script": "index.js",
+      "watch": false,
+      "node_args": "",
+      "merge_logs": false,
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "instances": 1,
+      "autorestart": true,
+      "max_restarts": 15,
+      "restart_delay": 5000
+    }
+  ]
+}
