@@ -160,6 +160,8 @@ Bakap.prototype.initialize = function (config) {
       
       return BPromise.map(config, function (opts) {
         
+        console.log(`Executing:: ${opts.name}`);
+        
         return self.upload(opts);
         
       }, {concurrency: 2});
